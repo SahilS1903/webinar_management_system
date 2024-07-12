@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Created</title>
+</head>
+<body>
+    <h2>Webinar Created!</h2>
+    <p>
+        A webinar titled "{{ webinar_title }}" has been created!.
+    </p>
+    {% if webinar_description %}
+    <p>
+        <strong>Description:</strong> {{ webinar_description }}
+    </p>
+    {% endif %}
+    <p>
+        <strong>Date:</strong> {{ webinar_date }}
+    </p>
+    <p>
+        <strong>Start Time:</strong> {{ start_time }}
+    </p>
+    <p>
+        {% if duration_hours == 1 %}
+        <strong>Duration:</strong> {{ duration_hours }} hour
+        {% else %}
+        <strong>Duration:</strong> {{ duration_hours }} hours
+        {% endif %}
+
+    </p>
+    <p>
+        <strong>End Time:</strong> {{ end_time }}
+    </p>
+    <p>
+        <strong>To be hosted by</strong>: {{ host_name }}
+    </p>
+    <p>
+        Join the webinar to gain valuable insights on the topic and engage with the speaker and other participants.
+    </p>
+</body>
+</html>

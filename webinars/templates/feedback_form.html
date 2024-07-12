@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Feedback Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        
+        
+        body {
+            color: black;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .sidebar {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #333;
+            padding-top: 30px;
+            overflow-y: auto;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            background-color: #fff;
+        }
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .nav-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+        .nav-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+        .nav-menu a:hover {
+            background-color: #555;
+        }
+        .bottom-links {
+            position: absolute;
+            bottom: 25px;
+            width: 100%;
+            text-align: center;
+        }
+        .nav-item.logout {
+            background-color: red;
+            border: none;
+            height: 30px;
+            margin-bottom: 5px;
+        }
+        .nav-item.logout :hover {
+            cursor: pointer;
+        }
+        .nav-item.logout i {
+            margin-right: auto;
+        }
+        .main-content {
+            margin-left: 300px;
+            padding: 40px;
+            padding-top: 140px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+        .main-content a:hover {
+            transform: translateY(-5px);
+            transition-delay: 0.2s;
+        }
+        body {
+            color: black;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #dddddd;
+            text-align: left;
+        }
+    
+        th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+    
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+    
+        a.button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none; /* Remove default underline */
+        }
+    
+        a.button:hover {
+            background-color: #0b7dda;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            color: #ffffff; /* Text color for better visibility */
+            margin: 0;
+            padding: 0;
+            background-color: #232323; /* Fallback color */
+            background-image: url('webinar_background.jpg'); /* Add the path to your webinar background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+          }
+          .form {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for better readability */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0px auto; /* Center the form horizontally */
+          }
+          input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+          }
+          label {
+            display: block;
+            margin-bottom: 10px;
+          }
+          textarea {
+            width: 90%;
+            padding: 10px;
+            border-radius: 5px;
+          }
+          @media screen and (max-width: 768px) {
+            form {
+              padding: 10px;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="profile">
+            {% if profile_avatar %}
+            <img class="profile-pic" src="{{ profile_avatar.url }}" alt="Profile Avatar">
+            {% else %}
+            <!-- Display a default avatar or placeholder if avatar is not available -->
+            <img class="profile-pic" src="{% static 'path_to_default_avatar/default_avatar.jpg' %}" alt="Default Avatar">
+            {% endif %}
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{%url 'profile'%}" class="nav-item">Change Profile</a></li>
+                <li><a href="{%url 'home'%}" class="nav-item">Dashboard</a></li>
+                <li><a href="#" class="nav-item">Announcement</a></li>
+            </ul>
+            <div class="bottom-links">
+                <a href="{% url 'change_password'%}" class="nav-item">Change Password</a>
+                
+                <form method="post" action="{%url 'logout'%}" class ="nav-item logout" >
+                    
+                    {% csrf_token %}
+                    <button type="submit" class ="nav-item logout" style="width: 100%;">Log Out <i class="fas fa-sign-out-alt"></i></button>
+                    
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <form action="{% url 'feedback_form' webinar_id=webinar.id %}" method="post" class="form">
+            {% csrf_token %}
+        <h2 style="text-align: center;">Webinar Feedback Form</h2>
+        <p>Rate the following aspects of the webinar:</p>
+        <label for="content" >Content:</label>
+        <input type="radio" name="content" value="1"required> 1
+        <input type="radio" name="content" value="2"> 2
+        <input type="radio" name="content" value="3"> 3
+        <input type="radio" name="content" value="4"> 4
+        <input type="radio" name="content" value="5"> 5<br><br>
+        
+        <label for="presentation" >Presentation:</label>
+        <input type="radio" name="presentation" value="1"required> 1
+        <input type="radio" name="presentation" value="2"> 2
+        <input type="radio" name="presentation" value="3"> 3
+        <input type="radio" name="presentation" value="4"> 4
+        <input type="radio" name="presentation" value="5"> 5<br><br>
+        
+        <label for="interactivity" >Interactivity:</label>
+        <input type="radio" name="interactivity" value="1"required> 1
+        <input type="radio" name="interactivity" value="2"> 2
+        <input type="radio" name="interactivity" value="3"> 3
+        <input type="radio" name="interactivity" value="4"> 4
+        <input type="radio" name="interactivity" value="5"> 5<br><br>
+        
+        <label for="overall" >Overall Experience:</label>
+        <input type="radio" name="overall" value="1"required> 1
+        <input type="radio" name="overall" value="2"> 2
+        <input type="radio" name="overall" value="3"> 3
+        <input type="radio" name="overall" value="4"> 4
+        <input type="radio" name="overall" value="5"> 5<br><br>
+        
+        <label for="comments" required>Additional Comments:</label>
+        <textarea name="comments" rows="6" cols="60"></textarea><br><br>
+        
+        <input type="submit" value="Submit Feedback">
+      </form>
+
+    </div>
+    {% include 'footer copy.html'%}
+</body>
+
+</html>

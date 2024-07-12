@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+        .contact-form .form-control {
+            border-radius: 5px;
+        }
+        .contact-form .btn {
+            width: 100%;
+        }
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group .form-control {
+            padding-right: 40px; /* Adjust the value as needed */
+        }
+        footer{
+            position :absolute;
+            bottom :0px;
+          }
+    </style>
+</head>
+<body>
+    {% include "navbar.html" %}
+    <br><br>
+    <div class="contact-form">
+        <h3 class='alert alert-success' style="color: black;">Contact Us!</h3>
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.errors }}
+                <label for="{{ form.name }}">Name:</label>
+                <div class="input-group">
+                    <input type="text" name="Name" required class="form-control" style="padding: 10px; border: 1px solid #cccccc; border-radius: 5px;">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                {{ form.email.errors }}
+                <label for="{{ form.email }}">Email:</label>
+                <div class="input-group">
+                    <input type="email" id="email" name="Email" required class="form-control" style="padding: 10px; border: 1px solid #cccccc; border-radius: 5px;">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                {{ form.message.errors }}
+                <label for="{{ form.message }}">Message:</label>
+                <div class="input-group">
+                    <textarea id="message" name="Message" rows="5" required class="form-control" style="padding: 10px; border: 1px solid #cccccc; border-radius: 5px;"></textarea>
+                </div>
+            </div>
+           
+            <input type="submit" value="Send Message" class="btn btn-primary btn-lg">
+        </form>
+        {% comment %} <form method="POST" autocomplete="off">
+            <!-- Very Important csrf Token -->
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <input type="submit" value="Send Message" class='btn btn-primary btn-lg'>
+        </form> {% endcomment %}
+    </div>
+    {% include "footer.html" %}
+</body>
+</html>

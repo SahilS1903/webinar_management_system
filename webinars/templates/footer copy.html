@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+ <meta charset="utf-8">
+ 
+  <style>
+    /*---------------------------------------
+   Social section
+-----------------------------------------*/
+    footer {
+      padding: 20px 0;
+      background-color: #212529;
+      margin: 0;
+      width: 82%;
+      display:flex;
+      margin-left:18%;
+      text-align:center;
+      justify-content: center;
+      z-index:-1;
+      position:relative;
+      bottom: 0;
+      
+    }
+
+    .fa {
+      padding: 20px;
+      font-size: 23px;
+      width: 60px;
+      text-align: center;
+      text-decoration: none;
+      margin: 5px 2px;
+      border-radius: 50%;
+    }
+
+    .fa:hover {
+      opacity: 0.5;
+      text-decoration: none;
+    }
+
+    p {
+      text-align: center;
+      color: #ffffff;
+      margin: 0;
+    }
+     .container2{
+      width: 82%;
+      display:flex;
+      margin-left:18%;
+      text-align:center;
+      justify-content: center;
+      position:absolute;
+      top: 0%;
+     }
+
+     .alert {
+      padding: 20px;
+      background-color: #f44336; /* Red */
+      color: white;
+      margin-bottom: 15px;
+    }
+    
+    /* The close button */
+    .closebtn {
+      position:relative;
+      left:0px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+      color: black;
+    }
+    
+
+    /* Make the footer full-width on small screens */
+    @media screen and (max-width: 767px) {
+      footer {
+        padding: 10px 0;
+      }
+
+      .fa {
+        padding: 10px;
+      }
+    }
+
+  </style>
+</head>
+<br><br>
+<div class="container2" >
+  
+    {% if messages %}
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <div style="background-color: rgb(236, 182, 44);color: white; font-weight: bold; margin-top:0%;margin-bottom: 10px;width:90%">
+          <ul class="messages">
+              {% for message in messages %}
+                  <li>{{ message }}</li>
+              {% endfor %}
+          </ul>
+      </div>    
+  {% endif %}
+  {% if error_message %}
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          <div style="background-color:red;color: white; font-weight: bold; margin-top:0%; margin-bottom: 10px;width:90%;">{{ error_message }}</div>
+  {% endif %}
+  
+  
+</div>
+
+
+
+</html>

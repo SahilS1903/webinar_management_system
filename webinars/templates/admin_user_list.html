@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #333;
+            padding-top: 30px;
+            overflow-y: auto;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            background-color: #fff;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+
+        .nav-menu a:hover {
+            background-color: #555;
+        }
+
+        .bottom-links {
+            position: absolute;
+            bottom: 25px;
+            width: 100%;
+            text-align: center;
+            background-color: #333;
+        }
+
+        .nav-item.logout {
+            background-color: red;
+            border: none;
+            height: 30px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item.logout:hover {
+            cursor: pointer;
+        }
+
+        .nav-item.logout i {
+            margin-right: auto;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding: 40px;
+            padding-top: 140px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .user-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .user-card {
+            position: relative;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            width: 300px;
+            height:  370px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            color: black;
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .user-details {
+            text-align: center;
+            color: black;
+        }
+
+        .user-details p {
+            text-align: center;
+            color: black;
+            text-align: left;
+        }
+
+        .trash-icon {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .trash-icon button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .trash-icon button:hover {
+            background-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+                padding-top: 90px;
+            }
+
+            .user-card {
+                width: calc(50% - 40px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .user-card {
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="profile">
+            {% if profile_avatar %}
+            <img class="profile-pic" src="{{ profile_avatar.url }}" alt="Profile Avatar">
+            {% else %}
+            <!-- Display a default avatar or placeholder if avatar is not available -->
+            <img class="profile-pic" src="{% static 'path_to_default_avatar/default_avatar.jpg' %}" alt="Default Avatar">
+            {% endif %}
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{% url 'profile' %}" class="nav-item">Change Profile</a></li>
+                <li><a href="{% url 'home' %}" class="nav-item">Dashboard</a></li>
+                <li><a href="#" class="nav-item">Announcement</a></li>
+            </ul>
+            <div class="bottom-links">
+                <a href="{% url 'change_password'%}" class="nav-item">Change Password</a>
+
+                <form method="post" action="{% url 'logout' %}" class="nav-item logout">
+
+                    {% csrf_token %}
+                    <button type="submit" class="nav-item logout" style="width: 100%;">Log Out <i class="fas fa-sign-out-alt"></i></button>
+
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <h1> User List</h1>
+        <div class="user-cards" style="color: black;">
+            {% for user in users %}
+            <div class="user-card">
+                {% if user.profile.avatar %}
+                <img class="user-avatar" src="{{ user.profile.avatar.url }}" alt="User Avatar">
+                {% else %}
+                <i class="fas fa-user-circle fa-7x"></i> <!-- Font Awesome user icon -->
+                {% endif %}
+                <div class="user-details">
+                    <p><strong>Name:</strong> {{ user.get_full_name }}</p>
+                    <p><strong>Role:</strong> {{ user.profile.role }}</p>
+                    <p><strong>Age:</strong> {{ user.profile.age }}</p>
+                    <p><strong>Number:</strong> {{ user.profile.phone }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                </div>
+                <div class="trash-icon">
+                    <form method="post" action="{% url 'delete_user' user.id %}" class="btn-primary" style="background-color:red;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-delete"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'footer copy.html'%}
+</body>
+
+</html>

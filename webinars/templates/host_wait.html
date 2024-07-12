@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Approval</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    
+    .jumbotron {
+      background-color: white;
+      padding: 2rem 1rem;
+      margin-top: 0;
+      height: 700px;
+    }
+    .jumbotron h1 {
+      text-align: center;
+    }
+    .lead {
+      text-align: center;
+      color: black; /* Changed color to black */
+    }
+    footer{
+      position: fixed;
+      bottom: 0px;
+    }
+  </style>
+</head>
+<body style="background-color: #f8f9fa;">
+
+{% include "navbar.html" %}
+
+<div class="jumbotron">
+  <h1 class="display-4">Hello, {{ request.user.first_name }}</h1>
+  <p class="lead">Your account is not approved yet.</p>
+  <p class="lead">Our team is currently reviewing your profile. </p>
+  <p class="lead">Your account will be approved soon.  </p>
+  <p class="lead">Please check back later.  </p>
+  <hr class="my-4">
+  <div class="text-center"> <!-- Centering the button -->
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary btn-lg">Logout For Now</button>
+    </form>
+  </div>
+</div>
+
+{% include "footer.html" %}
+
+</body>
+</html>

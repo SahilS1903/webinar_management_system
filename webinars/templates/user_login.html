@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Include Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-XxsT6TVZo+e2DoyGGL/x2j8U+OlGBHzS/7Ii2uXly9pPx+Z6Ji6pnbacTpC1OlB7IVGJxXPhVt2RcZB/QqgJ/w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style media="screen">
+    .jumbotron {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
+    .jumbotron h1 {
+      text-align: center;
+    }
+
+    body {
+      background-image: url("{% static 'images/bg5.jpg' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .form {
+      width: 80%;
+      max-width: 300px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.7) 50%);
+      border-radius: 10px;
+      transform: scale(1.3);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      margin: 10vh auto;
+    }
+
+    .form h1 {
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    .form h2 {
+      width: 220px;
+      font-family: sans-serif;
+      text-align: center;
+      color: #ff7200;
+      font-size: 22px;
+      background-color: #fff;
+      border-radius: 10px;
+      margin: 2px;
+      padding: 8px;
+    }
+
+    .form input {
+      width: calc(100% - 30px);
+      max-width: 240px;
+      height: 35px;
+      background: transparent;
+      border-bottom: 1px solid #ff7200;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      color: #fff;
+      font-size: 15px;
+      letter-spacing: 1px;
+      margin-top: 30px;
+      font-family: sans-serif;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative; /* Position relative for eye icon */
+    }
+
+    .form input:focus {
+      outline: none;
+    }
+
+    ::placeholder {
+      color: #fff;
+      font-family: Arial;
+    }
+
+    .btnn {
+      width: calc(100% - 30px);
+      max-width: 240px;
+      height: 40px;
+      background: #ff7200;
+      border: none;
+      margin-top: 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      transition: 0.4s ease;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btnn:hover {
+      background: #fff;
+      color: #ff7200;
+    }
+
+    .btnn a {
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .form .link {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 17px;
+      color: #fff;
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    .form .link a {
+      text-decoration: none;
+      color: #ff7200;
+    }
+
+    /* Eye icon styling */
+    .eye {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
+      color: #ccc;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+  <br><br>
+  <br><br>
+  <div class="form">
+    <h1>Welcome User!</h1>
+    <h2>Login Here</h2>
+    <form method="post" action="{% url 'userlogin'%}?next=/profile/" autocomplete="off">
+      {% csrf_token %}
+      <div style="position: relative;">
+        <input type="username" name="username" placeholder="Enter Username Here">
+      </div>
+      <div style="position: relative;">
+        <input type="password" name="password" id="password" placeholder="Enter Password Here">
+        <span class="eye" onclick="togglePasswordVisibility('password')"><i class="fa-solid fa-eye"></i></span>
+      </div>
+      <button type="submit" class="btnn">Login</button>
+
+      <p class="link">Don't have an account<br>
+        <a href="/signup">Sign up</a> here</p>
+    </form>
+  </div>
+
+  {% include "footer.html" %}
+
+  <!-- JavaScript for toggling password visibility -->
+  <script>
+    function togglePasswordVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+
+</html>

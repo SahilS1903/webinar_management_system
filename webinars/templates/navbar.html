@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Webinar Management System</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <style type="text/css">
+    .bs-example {
+      margin: 0px;
+
+    }
+    .bg-dark {
+    background-color: #212529!important;
+}
+    .navbar-brand {
+      font-size: 20px;
+      font-family: sans-serif;
+
+    }
+    .navbar-nav .nav-item.active .nav-link {
+  color:  white;
+  /* Additional styles for the active link */
+}
+
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/"><i class="fa-solid fa-users-between-lines" style="color: #fcfcfc;"></i> Webinar Management System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+          <a class="nav-link" href="/" id="userNavItem">Home</a>
+        </li>
+        <li class="nav-item {% if request.path == '/userlogin/' %}active{% endif %}">
+          <a class="nav-link" href="/userlogin" id="userNavItem">User</a>
+        </li>
+        <li class="nav-item {% if request.path == '/hostlogin/' %}active{% endif %}">
+          <a class="nav-link" href="/hostlogin" id="userNavItem">Host</a>
+        </li>
+        <li class="nav-item {% if request.path == '/adminlogin' %}active{% endif %}">
+          <a class="nav-link" href="/adminlogin" id="userNavItem">Admin</a>
+        </li>
+        <li class="nav-item {% if request.path == '/aboutus' %}active{% endif %}">
+          <a class="nav-link" href="/aboutus" id="userNavItem">About Us</a>
+        </li>
+        <li class="nav-item {% if request.path == '/contactus' %}active{% endif %}">
+          <a class="nav-link" href="/contactus" id="userNavItem">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+  
+
+  <div class="container2" style="padding-top:60px;">
+    <!-- Your content goes here -->
+    {% if messages %}
+        <div class="alert alert-warning">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>    
+    {% endif %}
+    
+    {% if error_message %}
+            <div style="color: red; font-weight: bold; margin-bottom: 10px;">{{ error_message }}</div>
+    {% endif %}
+  </div>
+</body>
+
+</html>

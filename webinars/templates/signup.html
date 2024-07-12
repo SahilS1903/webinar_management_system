@@ -1,0 +1,182 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-XxsT6TVZo+e2DoyGGL/x2j8U+OlGBHzS/7Ii2uXly9pPx+Z6Ji6pnbacTpC1OlB7IVGJxXPhVt2RcZB/QqgJ/w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    .jumbotron {
+      margin-bottom: 0px;
+    }
+
+    body {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("{% static 'images/bg1.jpg' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      color: #fff; /* Light text */
+      
+    }
+
+    /* Form styling */
+    form {
+      height: 62%;
+      max-width: 400px; /* Limit width for better readability */
+      background-color: #e4e2dd; /* Dark blue background */
+      padding: 10px;
+      border: 3px solid #f0f0f0; 
+      border-radius: 15px;  /*Increased border radius */
+      box-shadow: 0 0 15px rgb(254, 253, 253, 0.5); /* Shadow for depth */
+      transform: scale(1);
+      margin: 0 auto; /* Center the form */
+    }
+
+    /* Label styling */
+    label {
+      font-size: 16px;
+      font-weight: normal;
+      color: black; /* Lighter label color */
+      margin-bottom: 5px;
+    }
+
+    /* Input, select, and password field styling */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      padding: 12px;
+      border: 1px solid #4a6572; /* Darker border */
+      border-radius: 15px; /* Increased border radius */
+      background-color:#ba8d6e; /* Input background */
+      color: #fff; /* Light text */
+      margin-bottom: 10px; /* Space between fields */
+      transition: border-color 0.3s, box-shadow 0.3s;
+      width: 100%; /* Full width */
+      position: relative; /* Position relative for eye icon */
+    }
+
+    /* Input field focus styling */
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #3498db; /* Brighter border on focus */
+      box-shadow: 0 0 20px rgba(52, 152, 219, 0.5); /* Gradient effect */
+    }
+
+    /* Button styling */
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background-color: #3498db; /* Button color */
+      border: none;
+      border-radius: 40px; /* Increased border radius */
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    /* Button hover styling */
+    button[type="submit"]:hover {
+      background-color: #035389; /* Darker hover color */
+      transition: 0.3s ease;
+    }
+
+    /* Hover effect for all input, select, and label tags */
+    input:hover,
+    select:hover {
+      transform: scale(1.02); /* Scale effect on hover */
+      transition: transform 0.3s;
+    }
+
+    /* Placeholder styling */
+    ::-webkit-input-placeholder { /* WebKit browsers */
+      color: #ccc; /* Placeholder text color */
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: #ccc; /* Placeholder text color */
+      opacity: 1; /* Required for Firefox */
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: #ccc; /* Placeholder text color */
+      opacity: 1; /* Required for Firefox */
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: #ccc; /* Placeholder text color */
+    }
+
+    /* Eye icon styling */
+    .eye {
+      position: absolute;
+      top: 58%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  {% include "navbar.html" %}
+  <br><br>
+  <form method="post" autocomplete="off">
+    {% csrf_token %}
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Enter Your Username">
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter Your Email">
+    </div>
+    <div>
+      <label for="name">First Name:</label>
+      <input type="text" id="name" name="fname" placeholder="Enter Your First Name">
+    </div>
+    <div>
+      <label for="name">Last Name:</label>
+      <input type="text" id="name" name="lname" placeholder="Enter Your Last Name">
+    </div>
+    <div>
+      <label for="role">Role:</label>
+      <select id="role" name="role">
+        <option value="Host">Host</option>
+        <option value="User">User</option>
+      </select>
+    </div>
+    <div style="position: relative;">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter Your Password">
+      <span toggle="#password" class="eye field-icon toggle-password"><i class="fa-solid fa-eye"></i></span>
+    </div>
+    <div style="position: relative;">
+      <label for="password">Confirm Password:</label>
+      <input type="password" id="confirm_password" name="password2" placeholder="Enter Your Password Again">
+      <span toggle="#confirm_password" class="eye field-icon toggle-password"><i class="fa-solid fa-eye"></i></span>
+    </div>
+    <button type="submit">Create Account</button>
+  </form>
+  {% include "footer.html" %}
+
+  <!-- JavaScript for password toggle -->
+  <script>
+    document.querySelectorAll('.toggle-password').forEach(function(icon) {
+      icon.addEventListener('click', function() {
+        const input = document.querySelector(icon.getAttribute('toggle'));
+        if (input.type === 'password') {
+          input.type = 'text';
+        } else {
+          input.type = 'password';
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

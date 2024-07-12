@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register webinars</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<style>
+    body{
+        color:black;
+    }
+    <style>
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+      
+        th, td {
+          padding: 10px;
+          border-bottom: 1px solid #dddddd;
+          text-align: left;
+        } 
+      
+        th {
+          background-color: #f2f2f2;
+          font-weight: 600;
+        }
+      
+        tr:hover {
+          background-color: #f2f2f2;
+        }
+      
+        form {
+          display: inline-block;
+          margin-left: 10px;
+        }
+      
+        form input[type="submit"] {
+          padding: 5px 10px;
+          border-radius: 5px;
+          background-color: #2196F3;
+          color: white;
+          border: none;
+          cursor: pointer;
+        }
+      
+        form input[type="submit"]:hover {
+          background-color: #0b7dda;
+        }
+    
+    body {
+        color: black;
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table, th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+      
+  }
+   td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+  }
+    th {
+        background-color: #ddd;
+    }
+    a.btn-primary {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.sidebar {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #333;
+    padding-top: 30px;
+    overflow-y: auto;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+    background-color: #fff;
+}
+
+.profile {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.nav-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    margin-bottom: 10px;
+}
+
+.nav-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-size: 18px;
+}
+
+.nav-menu a:hover {
+    background-color: #555;
+}
+
+.bottom-links {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    
+
+}
+.nav-item.logout{
+    background-color: red;
+    border: none;
+    height: 30px;
+    margin-bottom: 5px;
+}
+.nav-item.logout :hover{
+    cursor: pointer;
+}
+.nav-item.logout i {
+    margin-right: auto;
+}
+
+.main-content {
+    margin-left: 300px;
+    padding: 40px;
+    padding-top: 140px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.main-content a:hover {
+    transform: translateY(-5px);
+    transition-delay: 0.2s;
+}
+
+.block {
+    background-color: black;
+    height: 270px;
+    padding: 20px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.block img {
+    width: 400px; /* Three-fourths of the block */
+    height: 210px;
+    border-radius: 10px;
+    object-fit: cover; /* Ensures the image covers the space */
+    margin-bottom: 40px;
+}
+
+.block h2
+{
+    text-align: center; /* Center text */
+    color: #fff;
+    margin-bottom: 5px;
+    position: absolute; /* Position text */
+    bottom: 5px; /* Adjust as needed */
+    left: 0;
+    right: 0;
+}
+
+
+
+</style>
+<body>
+
+    <div class="sidebar">
+        <div class="profile">
+            {% if profile_avatar %}
+            <img class="profile-pic" src="{{ profile_avatar.url }}" alt="Profile Avatar">
+            {% else %}
+            <!-- Display a default avatar or placeholder if avatar is not available -->
+            <img class="profile-pic" src="{% static 'path_to_default_avatar/default_avatar.jpg' %}" alt="Default Avatar">
+    {% endif %}
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{%url 'profile'%}" class="nav-item">Change Profile</a></li>
+                <li><a href="{%url 'home'%}" class="nav-item">Dashboard</a></li>
+                {% comment %} <li><a href="#" class="nav-item">Announcement</a></li> {% endcomment %}
+            </ul>
+            <div class="bottom-links">
+                <a href="{% url 'change_password'%}" class="nav-item">Change Password</a>
+                
+                <form method="post" action="{%url 'logout'%}" class ="nav-item logout">
+                    
+                    {% csrf_token %}
+                    <button type="submit" class ="nav-item logout" style="width: 100%;">Log Out <i class="fas fa-sign-out-alt"></i></button>
+                    
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <h1>Available Webinars</h1>
+{% if webinars %}
+<table>
+    <thead>
+      <tr>
+        <th>Webinar Title</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Register</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for webinar in webinars %}
+      <tr>
+        <td>{{ webinar.title }}</td>
+        <td>{{ webinar.description }}</td>
+        <td>{{ webinar.date }}</td>
+        <td>{{ webinar.start_time }} - {{ webinar.end_time }}</td>
+        <td>
+          <form action="{% url 'register_webinar' webinar.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Register">
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<p>No webinars available at the moment.</p>
+{% endif %}
+    </div>
+{% include 'footer copy.html'%}
+</body>
+
+</html>
+
+
+
+
+s

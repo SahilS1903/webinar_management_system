@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Webinar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: black;
+        }
+
+        #e1 {
+            font-size: 40px;
+            /* Increased font size */
+            position: relative;
+            top: 0px;
+            justify-content: center;
+            
+            /* Changed text color */
+            text-align: center;
+            color: #4caf50;
+            /* Centered text */
+            text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+            /* Added text shadow */
+        }
+
+        .form1 {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            
+            top: 0%;
+            justify-content: center;
+            align-items: center;
+            /* Changed text color */
+           
+            transform: scale(0.9);
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+            margin: auto;
+            
+            
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="date"],
+        input[type="time"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 1px 1px 2px 1px #4caf50;
+            /* Added box shadow */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #end_time {
+            margin-top: 10px;
+        }
+
+        /* Add some hover styles for the form elements */
+        input[type="text"]:focus,
+        textarea:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            box-shadow: 0px 0px 2px 1px #4caf50;
+        }
+
+        /* Add some visual interest to the form by using a gradient background color */
+        form::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom right, #4caf50, #3f51b5);
+            border-radius: 5px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #333;
+            padding-top: 30px;
+            overflow-y: auto;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            background-color: #fff;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+
+        .nav-menu a:hover {
+            background-color: #555;
+        }
+
+        .bottom-links {
+            position: absolute;
+            bottom: 25px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .bottom-links a {
+            display: inline-block;
+            background-color: #333;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-item.logout {
+            background-color: red;
+            border: none;
+            height: 30px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item.logout:hover {
+            cursor: pointer;
+        }
+
+        .nav-item.logout i {
+            margin-right: auto;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding: 40px ;
+            padding-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            margin-top: 0px;
+        }
+
+        .main-content a:hover {
+            transform: translateY(-5px);
+            transition-delay: 0.2s;
+        }
+
+        .block {
+            background-color: black;
+            height: 270px;
+            padding: 20px;
+            border-radius: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .block img {
+            width: 400px;
+            /* Three-fourths of the block */
+            height: 210px;
+            border-radius: 10px;
+            object-fit: cover;
+            /* Ensures the image covers the space */
+            margin-bottom: 40px;
+        }
+
+        .block h2 {
+            text-align: center;
+            /* Center text */
+            color: #fff;
+            margin-bottom: 5px;
+            position: absolute;
+            /* Position text */
+            bottom: 5px;
+            /* Adjust as needed */
+            left: 0;
+            right: 0;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: static;
+                padding-top: 10px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .form1 {
+                max-width: 100%;
+            }
+
+            .bottom-links {
+                position: relative;
+                bottom: unset;
+                margin-top: 20px;
+            }
+
+            .bottom-links a {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="profile">
+            {% if profile_avatar %}
+            <img class="profile-pic" src="{{ profile_avatar.url }}" alt="Profile Avatar">
+            {% else %}
+            <!-- Display a default avatar or placeholder if avatar is not available -->
+            <img class="profile-pic" src="{% static 'path_to_default_avatar/default_avatar.jpg' %}" alt="Default Avatar">
+            {% endif %}
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{%url 'profile'%}" class="nav-item">Change Profile</a></li>
+                <li><a href="{%url 'home'%}" class="nav-item">Dashboard</a></li>
+                <li><a href="#" class="nav-item">Announcement</a></li>
+            </ul>
+            <div class="bottom-links">
+                <a href="{% url 'change_password'%}" class="nav-item" style="background-color: #333;">Change Password</a>
+                <form method="post" action="{%url 'logout'%}" class="nav-item logout">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-item logout">Log Out <i class="fas fa-sign-out-alt"></i></button>
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        
+        <form method="post" id="webinarForm" class="form1">
+          <h1 id="e1">Create a Webinar</h1>
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required /><br /><br />
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea><br /><br />
+            <label for="date">Date:</label>
+            <!-- <input type="date" id="date" name="date" required /><br /><br /> -->
+            <input type="date" id="date" name="date" min="{{ today_date }}" required /><br /><br />
+            <label for="start_time">Start Time:</label>
+            <input type="time" id="start_time" name="start_time" required /><br /><br />
+            <label for="duration_hours">Duration (hours):</label>
+            <input type="number" id="duration_hours" name="duration_hours" min="1" onchange="updateEndTime()" required /><br /><br />
+            <label for="end_time">End Time:</label>
+            <input type="time" id="end_time" name="end_time" readonly /><br /><br />
+            
+            <button type="submit">Create Webinar</button>
+        </form>
+    </div>
+
+    <script>
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const today_date = `${year}-${month}-${day}`;
+
+    // Set minimum date for the date input field
+        document.getElementById('date').setAttribute('min', today_date);
+        function updateEndTime() {
+            const startTime = document.getElementById("start_time").value;
+            const duration = parseInt(document.getElementById("duration_hours").value);
+            const [hours, minutes] = startTime.split(":").map(Number);
+            const startDateTime = new Date(0, 0, 0, hours, minutes);
+            const endDateTime = new Date(
+                startDateTime.getTime() + duration * 60 * 60 * 1000
+            );
+            const endTime = `${String(endDateTime.getHours()).padStart(
+                2,
+                "0"
+            )}:${String(endDateTime.getMinutes()).padStart(2, "0")}`;
+            document.getElementById("end_time").value = endTime;
+        }
+    </script>
+
+    {% include 'footer copy.html' %}
+</body>
+
+</html>

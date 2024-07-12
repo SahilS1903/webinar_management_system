@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+{% load static %}
+{% include 'css.html' %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #333;
+            padding-top: 30px;
+            overflow-y: auto;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            background-color: #fff;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+
+        .nav-menu a:hover {
+            background-color: #555;
+        }
+
+        .bottom-links {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .nav-item.logout {
+            background-color: red;
+            border: none;
+            height: 30px;
+            margin-bottom: 0;
+        }
+
+        .nav-item.logout:hover {
+            cursor: pointer;
+        }
+
+        .nav-item.logout i {
+            margin-right: auto;
+        }
+
+        .main-content {
+            padding: 100px;
+            margin-left: 320px; /* Adjusted margin to accommodate the fixed sidebar */
+        }
+
+        .container {
+            max-width: 800px; /* Limit container width for better readability */
+            margin: 0 auto; /* Center the container */
+        }
+
+        @media only screen and (max-width: 768px) {
+            .sidebar {
+                width: 100%; /* Make the sidebar full-width */
+                position: relative; /* Change position to normal flow */
+                height: auto; /* Allow content to push down */
+            }
+
+            .main-content {
+                margin-left: 0; /* Adjusted margin for smaller screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="profile">
+            {% if profile_avatar %}
+            <img class="profile-pic" src="{{ profile_avatar.url }}" alt="Profile Avatar">
+            {% else %}
+            <!-- Display a default avatar or placeholder if avatar is not available -->
+            <img class="profile-pic" src="{% static 'path_to_default_avatar/default_avatar.jpg' %}" alt="Default Avatar">
+            {% endif %}
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="" class="nav-item">Change Profile</a></li>
+                <li><a href="{% url 'home'%}" class="nav-item">Dashboard</a></li>
+                {%if user.profile.role == 'User' %}
+                {% comment %} <li><a href="#" class="nav-item">Announcement</a></li> {% endcomment %}
+                {% endif %}
+                {%if user.profile.role == 'Host' %}
+                <li><a href="{%url 'create_announcement'%}" class="nav-item">Announcement</a></li>?
+                {% endif %}
+                {%if user.profile.role == 'Admin' %}
+                <li><a href="{%url 'create_announcement'%}" class="nav-item">Announcement</a></li>?
+                {% endif %}
+                <li>
+                  <div class="bottom-links">
+                    <a href="{% url 'change_password'%}" class="nav-item">Change Password</a>
+                    <form method="post" action="{%url 'logout'%}" class="nav-item logout">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-item logout">Log Out <i class="fas fa-sign-out-alt"></i></button>
+                    </form>
+                </div>
+                </li>
+              </ul>
+            
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <h1 class="textcenter mb-5" style="text-align:center; ">User</h1>
+        <div class="container">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="email" value="{{ user.email }}" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="bio">Bio:</label>
+                            <textarea name="bio" id="bio" class="form-control">{{ profile.bio }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="avatar">Profile picture :</label>
+                            {% if profile.avatar %}
+                            <img src="{{ profile.avatar.url }}" alt="Avatar" class="img-thumbnail mr-3" style="width: 100px; height: 100px; object-fit: cover;">
+                            {% endif %}
+                            <input type="file" name="avatar" id="avatar" class="form-control-file">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="state">State:</label>
+                            <input type="text" name="state" id="state" value="{{ profile.state }}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input type="text" name="city" id="city" value="{{ profile.city }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="text" name="phone" id="phone" value="{{ profile.phone }}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" name="dob" id="dob" value="{% if profile.dob %}{{ profile.dob|date:'Y-m-d' }}{% endif %}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <select name="gender" id="gender" class="form-control">
+                                <option value="">Select</option>
+                                <option value="M" {% if profile.gender == 'M' %} selected {% endif %}>Male</option>
+                                <option value="F" {% if profile.gender == 'F' %} selected {% endif %}>Female</option>
+                                <option value="O" {% if profile.gender == 'O' %} selected {% endif %}>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <textarea name="address" id="address" class="form-control">{{ profile.address }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% include 'footer copy.html' %}
+</body>
+
+</html>

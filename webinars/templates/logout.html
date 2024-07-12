@@ -1,0 +1,39 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      body {
+          margin: 0;
+          padding: 0;
+          font-family: Arial, sans-serif;
+      }
+      .container1 {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 540px; /* Full height of the viewport */
+      }
+      .image {
+          background-image: url("{% static 'images/wms14.jpg' %}");
+          background-size: cover;
+          background-position: center;
+          width: 600px; /* Width of the image */
+          height: 500px; /* Height of the image */
+          
+      }
+  </style>
+  </head>
+  <body style="background-color: #E6EBEF;">
+    {% include "navbar.html" %}
+    <br><br>
+    <div class="container1">
+      <div class="image"></div>
+    </div>  
+
+{% include "footer.html" %}
+
+  </body>
+</html>

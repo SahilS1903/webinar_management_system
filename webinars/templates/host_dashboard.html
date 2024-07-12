@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.sidebar {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #333;
+    padding-top: 30px;
+    overflow-y: auto;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+    background-color: #fff;
+}
+
+.profile {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.nav-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    margin-bottom: 10px;
+}
+
+.nav-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-size: 18px;
+}
+
+.nav-menu a:hover {
+    background-color: #555;
+}
+
+.bottom-links {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    
+
+}
+.nav-item.logout{
+    background-color: red;
+    border: none;
+    height: 30px;
+    margin-bottom: 5px;
+}
+.nav-item.logout :hover{
+    cursor: pointer;
+}
+.nav-item.logout i {
+    margin-right: auto;
+}
+
+.main-content {
+    margin-left: 300px;
+    padding: 40px;
+    padding-top: 140px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.main-content a:hover {
+    transform: translateY(-5px);
+    transition-delay: 0.2s;
+}
+
+.block {
+    background-color: black;
+    height: 270px;
+    padding: 20px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.block img {
+    width: 400px; /* Three-fourths of the block */
+    height: 210px;
+    border-radius: 10px;
+    object-fit: cover; /* Ensures the image covers the space */
+    margin-bottom: 40px;
+}
+
+.block h2
+{
+    text-align: center; /* Center text */
+    color: #fff;
+    margin-bottom: 5px;
+    position: absolute; /* Position text */
+    bottom: 5px; /* Adjust as needed */
+    left: 0;
+    right: 0;
+}
+
+
+
+</style>
+<body>
+
+    <div class="sidebar">
+        <div class="profile">
+            {% if profile_avatar %}
+            <img class="profile-pic" src="{{ profile_avatar.url }}" alt="Profile Avatar">
+            {% else %}
+            <!-- Display a default avatar or placeholder if avatar is not available -->
+            <img class="profile-pic" src="{% static 'path_to_default_avatar/default_avatar.jpg' %}" alt="Default Avatar">
+    {% endif %}
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{%url 'profile'%}" class="nav-item">Change Profile</a></li>
+                <li><a href="{%url 'home'%}" class="nav-item">Dashboard</a></li>
+                <li><a href="{%url 'create_announcement'%}" class="nav-item">Announcement</a></li>
+            </ul>
+            <div class="bottom-links">
+                <a href="{% url 'change_password'%}" class="nav-item">Change Password</a>
+                
+                <form method="post" action="{%url 'logout'%}" class ="nav-item logout">
+                    
+                    {% csrf_token %}
+                    <button type="submit" class ="nav-item logout" style="width: 100%;">Log Out <i class="fas fa-sign-out-alt"></i></button>
+                    
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <a href="{% url 'create_webinar'%}">
+            <div class="block">
+            <img src="{% static 'images/wms2.jpg'%}" alt="">
+            <h2>Create Webinar</h2>
+            </div>
+        </a>
+        
+        <a href="{% url 'my_upcoming_webinars'%}">
+            <div class="block">
+                <img src="{% static 'images/wms6.jpg'%}" alt="">
+                <h2>My Upcoming Webinar</h2>
+            </div>
+        </a>
+        <a href="{% url 'my_past_webinars'%}">
+            <div class="block">
+                <img src="{% static 'images/wms4.jpg'%}" alt="">
+                <h2>Webinar Records</h2>
+            </div>
+        </a>
+        <a href="select_hosted_webinars">
+            <div class="block">
+                <img src="{% static 'images/wms5.jpg'%}" alt="">
+                <h2>Users Feedbacks</h2>
+            </div>
+        </a>
+    </div>
+{% include 'footer copy.html'%}
+</body>
+
+</html>

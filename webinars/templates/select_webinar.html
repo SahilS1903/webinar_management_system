@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Users for {{ webinar.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        
+        
+        body {
+            color: black;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .sidebar {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #333;
+            padding-top: 30px;
+            overflow-y: auto;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            background-color: #fff;
+        }
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .nav-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .nav-menu li {
+            margin-bottom: 10px;
+        }
+        .nav-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+        .nav-menu a:hover {
+            background-color: #555;
+        }
+        .bottom-links {
+            position: absolute;
+            bottom: 25px;
+            width: 100%;
+            text-align: center;
+        }
+        .nav-item.logout {
+            background-color: red;
+            border: none;
+            height: 30px;
+            margin-bottom: 5px;
+        }
+        .nav-item.logout :hover {
+            cursor: pointer;
+        }
+        .nav-item.logout i {
+            margin-right: auto;
+        }
+        .main-content {
+            margin-left: 300px;
+            padding: 40px;
+            padding-top: 140px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+        .main-content a:hover {
+            transform: translateY(-5px);
+            transition-delay: 0.2s;
+        }
+        body {
+            color: black;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #dddddd;
+            text-align: left;
+        }
+    
+        th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+    
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+    
+        a.button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none; /* Remove default underline */
+        }
+    
+        a.button:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="profile">
+            {% if profile_avatar %}
+            <img class="profile-pic" src="{{ profile_avatar.url }}" alt="Profile Avatar">
+            {% else %}
+            <!-- Display a default avatar or placeholder if avatar is not available -->
+            <img class="profile-pic" src="{% static 'path_to_default_avatar/default_avatar.jpg' %}" alt="Default Avatar">
+            {% endif %}
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="{%url 'profile'%}" class="nav-item">Change Profile</a></li>
+                <li><a href="{%url 'home'%}" class="nav-item">Dashboard</a></li>
+                {% comment %} <li><a href="#" class="nav-item">Announcement</a></li> {% endcomment %}
+            </ul>
+            <div class="bottom-links">
+                <a href="{% url 'change_password'%}" class="nav-item">Change Password</a>
+                
+                <form method="post" action="{%url 'logout'%}" class ="nav-item logout">
+                    
+                    {% csrf_token %}
+                    <button type="submit" class ="nav-item logout" style="width: 100%;">Log Out <i class="fas fa-sign-out-alt"></i></button>
+                    
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        
+
+    {% if attended_webinars %}
+    <h1>Available Webinars</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Webinar Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Host</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for webinar in attended_webinars %}
+            <tr>
+                <td>{{ webinar.title }}</td>
+                <td>{{ webinar.description }}</td>
+                <td>{{ webinar.date }}</td>
+                <td>{{ webinar.start_time }} - {{ webinar.end_time }}</td>
+                <td>{{ webinar.host }}</td>
+                <td><a href="{% url 'feedback_form' webinar.id %}" class="button">Select</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h1>No webinars available at the moment.</h1>
+    {% endif %}
+
+    </div>
+    {% include 'footer copy.html'%}
+</body>
+
+</html>

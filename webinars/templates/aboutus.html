@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style media="screen">
+        .jumbotron {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            background-color: #f8f9fa;
+            padding: 3rem 2rem;
+        }
+
+        .jumbotron h1 {
+            text-align: center;
+            color: #343a40;
+        }
+
+        .alert {
+            margin: 0px;
+            background-color: #28a745;
+            color: #fff;
+            font-weight: bold;
+            padding: 0.75rem 1.25rem;
+        }
+
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+        footer{
+            position :absolute;
+            bottom :0px;
+          }
+    </style>
+    <title></title>
+</head>
+<body style="background-color: #f8f9fa;">
+    {% include "navbar.html" %}
+    <br><br>
+    <center>
+        <h3 class='alert alert-success' style="margin-bottom:0px;">About Us !</h3>
+    </center>
+    <div class="jumbotron" style="margin-bottom: 0px; margin-top: 0px;">
+        <h1 class="display-4">Welcome to Our Platform</h1>
+        <div class="container">
+          <h3 class="text-center my-4">About Our Webinar Platform</h3>
+          <p class="lead" style="color: black;">Our webinar management system is a powerful and user-friendly platform designed to streamline the process of hosting and attending online webinars. Whether you're an organizer, presenter, or attendee, our platform provides a seamless experience for all your webinar needs.</p>
+        </div>
+
+        <div class="container text-center my-5">
+          <h3 class="mb-4">Ready to Experience Seamless Webinar Management?</h3>
+          <a href="/signup" class="btn btn-primary btn-lg">Sign Up Now</a>
+          
+        </div>
+        
+        </p>
+    </div>
+    {% include "footer.html" %}
+</body>
+</html>
